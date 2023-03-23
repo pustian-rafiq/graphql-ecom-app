@@ -1,15 +1,27 @@
 const { categories, products } = require("../data/db");
 
+// parent parameters theke parent resolvers er id pai jmon  Product reolver theke category resolver call dile product er categoryId pai
+// args params theke passing all arguments gulo pai
+// context params theke database pai
+
 exports.Query = {
   // product
   products: (parent, args, context) => {
     const { products } = context.db;
-    const { onSale } = args.filter;
+    // const { onSale } = args ? args?.filter : null;
+    const onSale = args ? args?.filter?.onSale : null;
 
     let filteredProducts = products;
 
-    if (onSale) {
-      filteredProducts = filteredProducts.filter((product) => product.onSale);
+    if (onSale === true) {
+      filteredProducts = filteredProducts.filter(
+        (product) => product.onSale === onSale
+      );
+    }
+    if (onSale === false) {
+      filteredProducts = filteredProducts.filter(
+        (product) => product.onSale === onSale
+      );
     }
     return filteredProducts;
   },
