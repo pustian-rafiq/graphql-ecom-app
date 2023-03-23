@@ -2,7 +2,7 @@ const { ApolloServer, gql } = require("apollo-server");
 const { typeDefs } = require("./schema/schema");
 const { Query, Category, Product } = require("./resolvers/resolvers");
 
-// const { db } = require("./data/db");
+const { db } = require("./data/db");
 
 const server = new ApolloServer({
   typeDefs,
@@ -11,9 +11,9 @@ const server = new ApolloServer({
     Product,
     Category,
   },
-  // context: {
-  //   db,
-  // },
+  context: {
+    db,
+  },
 });
 
 const PORT = 8800;

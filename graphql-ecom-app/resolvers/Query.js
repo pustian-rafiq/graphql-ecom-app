@@ -5,11 +5,13 @@ exports.Query = {
     return ["Rahim", "Karim", "Tamim"];
   },
 
-  // product resolvers
-  products: () => {
+  // product
+  products: (parent, args, context) => {
+    const { products } = context.db;
     return products;
   },
   product: (parent, args, context) => {
+    const { products } = context.db;
     const { id } = args;
     const product = products.find((product) => product.id === id);
 
@@ -19,11 +21,13 @@ exports.Query = {
     return product;
   },
 
-  // category resolvers
+  // categories
   categories: () => {
+    const { categories } = context.db;
     return categories;
   },
   category: (parent, args, context) => {
+    const { categories } = context.db;
     const { id } = args;
     const category = categories.find((data) => data.id === id);
 
@@ -31,5 +35,11 @@ exports.Query = {
       return null;
     }
     return category;
+  },
+
+  // Reviews
+  reviews: (parent, args, context) => {
+    const { reviews } = context.db;
+    return reviews;
   },
 };

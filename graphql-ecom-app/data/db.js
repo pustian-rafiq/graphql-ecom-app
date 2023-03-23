@@ -293,13 +293,13 @@ const reviews = [
   },
 ];
 
-// exports.db = {
-//   products,
-//   categories,
-//   reviews,
-// };
-module.exports = {
+exports.db = {
   products,
   categories,
   reviews,
 };
+// module.exports = {
+//   products,
+//   categories,
+//   reviews,
+// };
