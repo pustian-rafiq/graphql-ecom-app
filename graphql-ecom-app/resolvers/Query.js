@@ -1,14 +1,17 @@
 const { categories, products } = require("../data/db");
 
 exports.Query = {
-  userNames: () => {
-    return ["Rahim", "Karim", "Tamim"];
-  },
-
   // product
   products: (parent, args, context) => {
     const { products } = context.db;
-    return products;
+    const { onSale } = args.filter;
+
+    let filteredProducts = products;
+
+    if (onSale) {
+      filteredProducts = filteredProducts.filter((product) => product.onSale);
+    }
+    return filteredProducts;
   },
   product: (parent, args, context) => {
     const { products } = context.db;
