@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require("apollo-server");
 const { typeDefs } = require("./schema/schema");
-const { Query, Category, Product } = require("./resolvers/resolvers");
+const { Query, Category, Product, Mutation } = require("./resolvers/resolvers");
 
 const { db } = require("./data/db");
 
@@ -8,6 +8,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers: {
     Query,
+    Mutation,
     Product,
     Category,
   },

@@ -1,5 +1,3 @@
-const { categories, products } = require("../data/db");
-
 // parent parameters theke parent resolvers er id pai jmon  Product reolver theke category resolver call dile product er categoryId pai
 // args params theke passing all arguments gulo pai
 // context params theke database pai
@@ -7,9 +5,10 @@ const { categories, products } = require("../data/db");
 exports.Query = {
   // product
   products: (parent, args, context) => {
-    const { products } = context.db;
+    const { products, reviews } = context.db;
     // const { onSale } = args ? args?.filter : null;
     const onSale = args ? args?.filter?.onSale : null;
+    const avgRating = args ? args?.filter?.avgRating : null;
 
     let filteredProducts = products;
 
@@ -22,6 +21,24 @@ exports.Query = {
       filteredProducts = filteredProducts.filter(
         (product) => product.onSale === onSale
       );
+    }
+
+    // Filter products according to avg rating
+    if ([1, 2, 3, 4, 5].includes(avgRating)) {
+      filteredProducts = filteredProducts.filter((product) => {
+        let sumRating = 0;
+        let numberOfReviews = 0;
+
+        reviews.forEach((review) => {
+          if (review.productId === product.id) {
+            sumRating += review.rating;
+            numberOfReviews++;
+          }
+        });
+        const avgProductRating = sumRating / numberOfReviews;
+        console.log("avgProductRating", avgProductRating, product.name);
+        return avgProductRating >= avgRating;
+      });
     }
     return filteredProducts;
   },
@@ -37,7 +54,7 @@ exports.Query = {
   },
 
   // categories
-  categories: () => {
+  categories: (parent, args, context) => {
     const { categories } = context.db;
     return categories;
   },
